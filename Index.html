@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guapurú Chess | Repositorio de Cursos</title>
+    <!-- Fuente Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-primary: #0F172A;
+            --bg-card: #1E293B;
+            --accent-gold: #D97706;
+            --accent-gold-hover: #F59E0B;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        /* Encabezado */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+        }
+
+        /* Presentación / Hero */
+        .hero {
+            text-align: center;
+            padding: 4rem 1.5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(217, 119, 6, 0.15);
+            color: var(--accent-gold-hover);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(217, 119, 6, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+        }
+
+        /* Grilla de Cursos */
+        .courses-container {
+            max-width: 1200px;
+            margin: 2rem auto 4rem;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        /* Estructura de la Tarjeta */
+        .course-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(217, 119, 6, 0.5);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .course-image-container {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background-color: #020617;
+            position: relative;
+        }
+
+        .course-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .course-card:hover .course-image-container img {
+            transform: scale(1.05);
+        }
+
+        .course-card-body {
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .course-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-gold-hover);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .course-author {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .course-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.8rem;
+            flex-grow: 1;
+        }
+
+        .btn-drive {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background-color: var(--accent-gold);
+            color: #0F172A;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.85rem 1.25rem;
+            border-radius: 10px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            text-align: center;
+        }
+
+        .btn-drive:hover {
+            background-color: var(--accent-gold-hover);
+            transform: scale(1.02);
+        }
+
+        /* --- SECCIÓN DE APOYO Y DONACIONES --- */
+        .support-section {
+            max-width: 850px;
+            margin: 0 auto 5rem;
+            padding: 2.5rem 2rem;
+            background-color: var(--bg-card);
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .support-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .support-title i {
+            color: #EF4444;
+            margin-right: 0.5rem;
+        }
+
+        .support-description {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 650px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .support-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        /* Tarjeta del QR */
+        .qr-card {
+            background: #020617;
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 260px;
+            width: 100%;
+        }
+
+        .qr-img-wrapper {
+            position: relative;
+            cursor: pointer;
+            width: 190px;
+            height: 190px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(217, 119, 6, 0.4);
+            background: #fff;
+        }
+
+        .qr-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .qr-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .qr-img-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+        .qr-img-wrapper:hover .qr-overlay {
+            opacity: 1;
+        }
+
+        .qr-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            width: 100%;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.65rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-action:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold-hover);
+            background-color: rgba(217, 119, 6, 0.1);
+        }
+
+        /* Detalles alternativos */
+        .support-details {
+            text-align: left;
+            flex: 1;
+            min-width: 280px;
+            max-width: 380px;
+        }
+
+        .support-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .detail-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 0.9rem 1.1rem;
+            border-radius: 12px;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .detail-info strong {
+            color: var(--text-main);
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.2rem;
+        }
+
+        .btn-copy {
+            background: none;
+            border: none;
+            color: var(--accent-gold);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.4rem;
+            transition: color 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            color: var(--accent-gold-hover);
+        }
+
+        /* --- MODAL PARA EXPANDIR LA IMAGEN --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            max-width: 450px;
+            width: 90%;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid var(--accent-gold);
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            animation: modalZoom 0.25s ease-out;
+        }
+
+        @keyframes modalZoom {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content img {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #fff;
+            padding: 0.5rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: var(--accent-gold);
+            color: #0F172A;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Pie de página */
+        footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+            .courses-container {
+                grid-template-columns: 1fr;
+            }
+            .support-grid {
+                flex-direction: column;
+            }
+            .support-details {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-chess-knight"></i>
+                Guapurú Chess
+            </a>
+        </div>
+    </header>
+
+    <!-- Sección Principal -->
+    <main>
+        <section class="hero">
+            <span class="hero-badge"><i class="fa-solid fa-folder-open"></i> Repositorio Exclusivo</span>
+            <h1>Lleva tu ajedrez al siguiente nivel</h1>
+            <p>Accede de forma directa a la biblioteca de cursos alojados en Google Drive.</p>
+        </section>
+
+        <!-- Grilla de Cursos -->
+        <section class="courses-container">
+
+            <!-- Curso 1 -->
+            <article class="course-card">
+                <div class="course-image-container">
+                    <img src="Img/tacticas.png" alt="100 Tácticas Ganadoras">
+                </div>
+                <div class="course-card-body">
+                    <div class="course-tag">Táctica & Entrenamientos</div>
+                    <h2 class="course-title">100 Tácticas Ganadoras</h2>
+                    <div class="course-author">
+                        <i class="fa-solid fa-graduation-cap"></i> Guapurú Chess
+                    </div>
+                    <p class="course-description">
+                        Selección de patrones de cálculo, combinaciones decisivas y ejercicios tácticos esenciales para rematar tus partidas.
+                    </p>
+                    <a href="https://drive.google.com/drive/folders/13hWSZYcWfrafrRW49CLpGdmHBydbBrWO?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-drive">
+                        <i class="fa-brands fa-google-drive"></i> Abrir en Drive
+                    </a>
+                </div>
+            </article>
+
+            <!-- Curso 2 -->
+            <article class="course-card">
+                <div class="course-image-container">
+                    <img src="Img/CalculoGanador.jpg" alt="Cálculo Ganador - Chess Enigma">
+                </div>
+                <div class="course-card-body">
+                    <div class="course-tag">Cálculo Profundo</div>
+                    <h2 class="course-title">Cálculo Ganador</h2>
+                    <div class="course-author">
+                        <i class="fa-solid fa-user-ninja"></i> Chess Enigma
+                    </div>
+                    <p class="course-description">
+                        Aprende la metodología para estructurar jugadas candidatas, visualizar árboles de variantes y evitar errores críticos.
+                    </p>
+                    <a href="https://drive.google.com/drive/folders/1RVW4Qriu7S7OwSkww33r97PED5iZQkXQ?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-drive">
+                        <i class="fa-brands fa-google-drive"></i> Abrir en Drive
+                    </a>
+                </div>
+            </article>
+
+            <!-- Curso 3 -->
+            <article class="course-card">
+                <div class="course-image-container">
+                    <img src="Img/Patrones.jpg" alt="Patrones de Jaque Mate">
+                </div>
+                <div class="course-card-body">
+                    <div class="course-tag">Finales & Mates</div>
+                    <h2 class="course-title">Patrones de Jaque Mate</h2>
+                    <div class="course-author">
+                        <i class="fa-solid fa-user-shield"></i> Rey Enigma & Chess Enigma
+                    </div>
+                    <p class="course-description">
+                        Guía visual de esquemas de jaque mate inolvidables para rematar al rey enemigo con precisión quirúrgica.
+                    </p>
+                    <a href="https://drive.google.com/drive/folders/1zvtarou986Hu7NTRhuF5tr3OGC-C-dzG?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-drive">
+                        <i class="fa-brands fa-google-drive"></i> Abrir en Drive
+                    </a>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- SECCIÓN DE APOYO ECONÓMICO Y DONACIONES -->
+        <section class="support-section">
+            <h2 class="support-title"><i class="fa-solid fa-heart"></i> Apoya este Proyecto</h2>
+            <p class="support-description">
+                ¡Hola! Soy Osias estudiante de <strong>Ingeniería en Sistemas en la UABJB (Beni)</strong>. Creo y mantengo este repositorio con mucho entusiasmo para compartir material y cursos de ajedrez de calidad. Si el contenido te es útil y deseas apoyar mi camino universitario, cualquier aporte económico será de gran ayuda para financiar mis estudios. ¡Gracias por respaldar este proyecto! 🚀
+            </p>
+
+            <div class="support-grid">
+                <!-- QR + Acciones -->
+                <div class="qr-card">
+                    <!-- Haz clic para expandir el QR -->
+                    <div class="qr-img-wrapper" onclick="openModal()">
+                        <!-- Reemplaza 'Img/qr-pago.png' por la ruta real de tu QR -->
+                        <img id="qrImage" src="Img/7432.png" alt="Código QR para donación">
+                        <div class="qr-overlay">
+                            <i class="fa-solid fa-expand"></i>
+                        </div>
+                    </div>
+
+                    <div class="qr-actions">
+                        <button class="btn-action" onclick="openModal()">
+                            <i class="fa-solid fa-maximize"></i> Expandir QR
+                        </button>
+                        <!-- Descargar imagen directamente -->
+                        <a id="downloadBtn" href="Img/7432.png" download="QR_Guapuru_Chess.png" class="btn-action">
+                            <i class="fa-solid fa-download"></i> Descargar QR
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Datos bancarios / alias -->
+                <div class="support-details">
+                    <h3>Otros medios de aporte:</h3>
+
+                    <div class="detail-box">
+                        <div class="detail-info">
+                            <strong>Titular / Estudiante:</strong>
+                            Osias Peña 
+                        </div>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-info">
+                            <strong>Alias / CBU / N° Cuenta:</strong>
+                            <span id="accountNumber">63284106</span>
+                        </div>
+                        <button class="btn-copy" onclick="copyText('accountNumber')" title="Copiar dato">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <div class="detail-box">
+                        <div class="detail-info">
+                            <strong>Entidad / Billetera:</strong>
+                             Yape 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL POPUP PARA EXPANDIR QR -->
+    <div id="qrModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal(event)">&times;</button>
+            <h3 style="margin-bottom: 1rem; color: var(--text-main);">Escanear Código QR</h3>
+            <img id="modalQrImage" src="" alt="QR Ampliado">
+            <p style="margin-top: 0.8rem; font-size: 0.85rem; color: var(--text-muted);">
+                Haz clic fuera de la ventana para cerrar
+            </p>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2026 Guapurú Chess.</p>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT -->
+    <script>
+        // Abrir la imagen del QR en pantalla completa (Modal)
+        function openModal() {
+            const qrSrc = document.getElementById('qrImage').src;
+            document.getElementById('modalQrImage').src = qrSrc;
+            document.getElementById('qrModal').style.display = 'flex';
+        }
+
+        // Cerrar el modal
+        function closeModal(event) {
+            // Cierra si presiona la 'X' o fuera de la caja
+            if (event.target.classList.contains('modal') || event.target.classList.contains('close-modal') || event.target.innerHTML === '&times;') {
+                document.getElementById('qrModal').style.display = 'none';
+            }
+        }
+
+        // Copiar texto al portapapeles
+        function copyText(elementId) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('¡Copiado al portapapeles con éxito!');
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
